@@ -1,10 +1,11 @@
 import {useState} from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const categorias = ["Todo","Museos","Cafes","Arte urbano","Selfies"]
 const vistas = ["Inicio","Comparte tu Place"]
 
-
 export default function Home() {
+    const navigate = useNavigate()
     const [cat_activa, setCatActiva] = useState("Todo")
     const [vistaActiva, setVistaActiva] = useState('Inicio')
 
@@ -28,7 +29,12 @@ export default function Home() {
                 {vistas.map(vista => (
                         <button
                         key={vista}
-                        onClick={() => setVistaActiva(vista)}
+                        onClick={() => {
+                            setVistaActiva(vista);
+                            if (vista === "Comparte tu Place") {
+                                navigate('/create');
+                            }
+                        }}
                         className={`text-sm px-4 py-1.5 rounded-2xl border transition-all whitespace-nowrap
                             ${vistaActiva === vista
                             ? 'bg-black text-white border-black'
