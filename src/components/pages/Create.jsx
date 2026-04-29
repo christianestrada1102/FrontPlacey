@@ -22,7 +22,31 @@ export default function Create() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(form)
+
+        const data = {
+            id_user: 1,
+            id_cat: Number(form.id_cat),
+            name_place: form.nombre,
+            description: form.descripcion,
+            address: form.direccion
+        }
+
+        try {
+            const res = await fetch ("http://localhost:3014/placeys", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+
+            const result = await res.json()
+            console.log(result)
+            navigate("/")
+        } catch (error) {
+            console.error("Error al crear el place:", error)
+        }
+        
     }
 
     return (
