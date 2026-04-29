@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 export default function Create() {
     
     const navigate = useNavigate()
+    const [preview, setPreview] = useState(null)
     const [form,setForm] = useState({
         nombre: "",
         descripcion: "",
@@ -17,7 +18,12 @@ export default function Create() {
     }
 
     const handleFoto = (e) => {
-        setForm ({...form, foto: e.target.files[0]})
+        const file = e.target.files[0]
+        setForm ({...form, foto: file})
+
+        if (file) {
+            setPreview(URL.createObjectURL(file))
+        }
     }
 
     const handleSubmit = async (e) => {
@@ -69,11 +75,15 @@ export default function Create() {
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                 <div className="w-full h-48 rounde-2xl border-2 border-dashed border-gray-600
-                flex items-center justify-center cursor-pointer hover:border-[#C1440E] transition-all">
+                flex items-center justify-center cursor-pointer hover:border-[#C1440E] transition-all overflow-hidden">
 
                 <input type="file" accept="image/*" onChange={handleFoto} className="hidden" id="foto" />
                 <label htmlFor="foto" className="text-gray-400 text-sm cursor-pointer">
-                    {form.foto ? form.foto.name : "Sube una foto de tu place"}
+                    {  preview ? (
+                        <img src={preview} alt="Preview" className="w-full h-full object-cover rounded-xl" />
+                    ) : (
+                        <span>Sube una foto de tu place</span>
+                    )}
                 </label>
                 </div>
 
