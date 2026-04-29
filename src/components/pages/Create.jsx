@@ -22,22 +22,26 @@ export default function Create() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-
-        const data = {
-            id_user: 1,
-            id_cat: Number(form.id_cat),
-            name_place: form.nombre,
-            description: form.descripcion,
-            address: form.direccion
+        
+        if (!form.foto) { 
+            alert("la imagen es obligatoria")
+            return 
         }
+
+        const data = new FormData() 
+
+            data.append("imagePlace", form.foto)
+            data.append ("id_user", 1)
+            data.append( "id_cat", form.id_cat)
+            data.append ("name_place", form.nombre)
+            data.append ("description", form.descripcion)
+            data.append ("address", form.direccion)
+        
 
         try {
             const res = await fetch ("http://localhost:3014/placeys", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data)
+                body: data
             })
 
             const result = await res.json()
