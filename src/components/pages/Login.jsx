@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { loginRequest } from "../../api/authApi"
+import { loginRequest,registerRequest } from "../../api/authApi"
 
 export default function Login() {
     const navigate = useNavigate()
@@ -10,16 +10,20 @@ export default function Login() {
     const [nombre, setNombre] = useState("")
     const [mensaje, setMensaje] = useState("")
     const [isLogin, setIsLogin] = useState(true)
-    const [confirmePassword, setConfirmePassword] = useState("")
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        if (password.length < 8) {
+        if (password.trim().length < 8) {
             setMensaje("La contraseña debe tener al menos 8 caracteres")
             return
         }
 
+        if (!isLogin && nombre.trim() === "") {
+        setMensaje("El nombre es obligatorio")
+        return
+        }
+        
         try {
         if (isLogin) {
             const data = await loginRequest(email, password)
@@ -27,8 +31,14 @@ export default function Login() {
             localStorage.setItem("user", JSON.stringify(data.user))
             navigate("/dashboard")
         } else {
-            console.log("Registrando...", {email, password, confirmePassword})
+
+            await registerRequest(nombre,email,password)
+            setMensaje("Registro exitoso, ahora puedes iniciar sesión")
             setIsLogin(true)
+
+            setNombre("")
+            setEmail("")
+            setPassword("")
         }
         } catch (error) {
             setMensaje(error.response?.data?.error || "Error al iniciar sesión")
@@ -90,11 +100,10 @@ return (
 
         {mensaje && <p className="text-[#C1440E] text-sm">{mensaje}</p>}
 
-    <button type="submit" className='w-full py-3 rounded-xl bg-[#C1440E] text-white font-medium
-    hover:bg-[#a83a0c] transition-colors 
-        ${isLogin 
-        ? "bg-[#C1440E] text-white hover:bg-[#a83a0c]"
-        : "bg-[#DFD0B8] text-black hover:opacity-90"}'
+    <button type="submit" className={`w-full py-3 rounded-xl font-medium transition-colors 
+    ${isLogin 
+    ? "bg-[#DFD0B8] text-black hover:opacity-90"
+    : "bg-[#C1440E] text-white hover:bg-[#a83a0c]"}`}
         >
         {isLogin ? "Iniciar sesión" : "Crear cuenta"}
     </button>
