@@ -63,7 +63,7 @@ export default function Home() {
             <div className="px-6 py-12 max-w-5x1">
                 <h1 className="text-6xl font-serif leading-thigh">
                     Descubre los lugares mas bonitos<br />
-                    <span className="italic text-[#C1440E]">de Chihuahua</span>,<span> en</span> <br />Placey.
+                    <span className="italic text-[#C1440E]">de Chihuahua</span>,<span> en</span> <br />Placey<span className="italic text-[#C1440E]">.</span>
                 </h1>
                 <p className="mt-6 text-gray-500 max-w-sm text-sm leading-relaxed">
                     Descubre lugares únicos del norte a través de fotos reales:

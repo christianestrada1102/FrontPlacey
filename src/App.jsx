@@ -8,17 +8,11 @@ import Create from './components/pages/Create'
 
 export default function App() {
   return (
-    
-    <div>
-      <nav>
-        <Link to="/">Login</Link> |{" "}
-        <Link to="/dashboard">Dashboard</Link> |{" "}
-        <Link to="/users">Users</Link> |{" "}
-      </nav>
-  
 
       <Routes>
-        <Route path='/' element={<Login />} />
+      <Route path='/' element={<Home />} />
+      <Route path='/create' element={<Create />} />
+      <Route path='/login' element={<Login />} />
 
         <Route path='/dashboard'
          element={
@@ -37,13 +31,7 @@ export default function App() {
         />
          
       </Routes>
-        </div>
 
   )
 }
 
-
-    //<Routes>
-   //     <Route path='/' element={<Home />} />
-      //  <Route path='/create' element={<Create />} />
- //     </Routes>
