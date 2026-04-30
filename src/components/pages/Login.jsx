@@ -7,12 +7,18 @@ export default function Login() {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [nombre, setNombre] = useState("")
     const [mensaje, setMensaje] = useState("")
     const [isLogin, setIsLogin] = useState(true)
     const [confirmePassword, setConfirmePassword] = useState("")
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+
+        if (password.length < 8) {
+            setMensaje("La contraseña debe tener al menos 8 caracteres")
+            return
+        }
 
         try {
         if (isLogin) {
@@ -52,30 +58,35 @@ return (
             {isLogin ? "Iniciar sesión" : "Crear cuenta"}
         </h1>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+
+        {!isLogin && (
+            <input type="text"
+                placeholder="Nombre"
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
+                className="w-full px-4 py-3 rounded-xl bg-white/10 text-[#DFD0B8] placeholder-gray-500
+                    outline-none border border-gray-700 focus:border-[#C1440E] trasition-all"
+                />
+        )}
+
     <input type="email"
-        placeholder="Correo"
+        placeholder="Correo electrónico"
     value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="w-full px-4 py-3 rounded-xl bg-white/10 text-[#DFD0B8] placeholder-gray-500
+        className="w-full px-4 py-2 rounded-xl bg-white/10 text-[#DFD0B8] placeholder-gray-500
         outline-none border border-gray-700 focus:border-[#C1440E] trasition-all"
     />
 
     <input type="password"
         placeholder="Constraseña"
         value={password}
-    onChange={(e) => setPassword(e.target.value)}
+    onChange={(e) => {
+        setPassword(e.target.value)
+        setMensaje("")
+    }}
         className="w-full px-4 py-3 rounded-xl bg-white/10 text-[#DFD0B8] placeholder-gray-500
             outline-none border border-gray-700 focus:border-[#C1440E] trasition-all"
         />
-    {!isLogin && (
-        <input type="password"
-                placeholder="Confirmar contraeña"
-                value={confirmePassword}
-                onChange={(e) => setConfirmePassword(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl bg-white/10 text-[#DFD0B8] placeholder-gray-500
-                    outline-none border border-gray-700 focus:border-[#C1440E] trasition-all"
-                />
-    )}
 
         {mensaje && <p className="text-[#C1440E] text-sm">{mensaje}</p>}
 
