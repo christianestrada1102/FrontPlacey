@@ -1,14 +1,49 @@
 import Home from './components/pages/Home'
-import { BrowserRouter,Routes,Route } from 'react-router-dom'
+import {Routes,Route,Link} from 'react-router-dom'
+import Login from './components/pages/Login'
+import Dashboard from './components/pages/Dashboard'
+import ProtectedRoute from './components/organism/protectedRoute'
+import Users from './components/pages/Users'
 import Create from './components/pages/Create'
 
 export default function App() {
   return (
-    <BrowserRouter>
+    
+    <div>
+      <nav>
+        <Link to="/">Login</Link> |{" "}
+        <Link to="/dashboard">Dashboard</Link> |{" "}
+        <Link to="/users">Users</Link> |{" "}
+      </nav>
+  
+
       <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/create' element={<Create />} />
+        <Route path='/' element={<Login />} />
+
+        <Route path='/dashboard'
+         element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+         }
+        />
+
+        <Route path='/users'
+         element={
+          <ProtectedRoute>
+            <Users />
+          </ProtectedRoute>
+         }
+        />
+         
       </Routes>
-    </BrowserRouter>
+        </div>
+
   )
 }
+
+
+    //<Routes>
+   //     <Route path='/' element={<Home />} />
+      //  <Route path='/create' element={<Create />} />
+ //     </Routes>
