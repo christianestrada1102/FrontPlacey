@@ -2,7 +2,7 @@ import {useState} from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const categorias = ["Todo","Museos","Cafes","Arte urbano","Selfies"]
-const vistas = ["Inicio","Comparte tu Place"]
+const vistas = ["Comparte tu Place", "Iniciar sesión"]
 
 export default function Home() {
     const navigate = useNavigate()
@@ -34,11 +34,18 @@ export default function Home() {
                             if (vista === "Comparte tu Place") {
                                 navigate('/create');
                             }
+
+                            if (vista === "Iniciar sesión") {
+                                navigate('/login');
+                            }
                         }}
                         className={`text-sm px-4 py-1.5 rounded-2xl border transition-all whitespace-nowrap
-                            ${vistaActiva === vista
+                            ${
+                                vista === "Iniciar sesión"
+                            ? 'bg-[#C1440E] text-white border-[#C1440E] hover:bg-[#a33a0c]'
+                            : vistaActiva === vista
                             ? 'bg-black text-white border-black'
-                            : 'border-gray-300 text-gray-600 hover:bg-gray-50'
+                            : 'text-sm  text-black px-4 py-1.5 rounded-2xl border border-gray-300-text-gray-600 hover:bg-gray-50'
                             }`}
                         >
                         {vista}
