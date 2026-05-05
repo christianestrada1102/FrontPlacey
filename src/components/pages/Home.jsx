@@ -2,7 +2,10 @@ import {useState} from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const categorias = ["Todo","Museos","Cafes","Arte urbano","Selfies"]
-const vistas = ["Comparte tu Place", "Iniciar sesión"]
+const token = localStorage.getItem("token")
+const vistas = token ? ["Comparte tu Place", "Cerrar sesión"] 
+                    : ["Comparte tu Place", "Iniciar sesión"]
+
 
 export default function Home() {
     const navigate = useNavigate()
@@ -32,11 +35,21 @@ export default function Home() {
                         onClick={() => {
                             setVistaActiva(vista);
                             if (vista === "Comparte tu Place") {
+                                if (!token) {
+                                    navigate('/login')
+                                    return
+                                }
                                 navigate('/create');
                             }
 
                             if (vista === "Iniciar sesión") {
                                 navigate('/login');
+                            }
+
+                            if (vista === "Cerrar sesión") {
+                                localStorage.removeItem("token")
+                                localStorage.removeItem("user")
+                                navigate('/login')
                             }
                         }}
                         className={`text-sm px-4 py-1.5 rounded-2xl border transition-all whitespace-nowrap

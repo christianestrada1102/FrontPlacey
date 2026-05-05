@@ -5,6 +5,7 @@ import Dashboard from './components/pages/Dashboard'
 import ProtectedRoute from './components/organism/protectedRoute'
 import Users from './components/pages/Users'
 import Create from './components/pages/Create'
+import Realtime from './components/pages/Realtime'
 
 export default function App() {
   return (
@@ -13,6 +14,9 @@ export default function App() {
       <Route path='/' element={<Home />} />
       <Route path='/create' element={<Create />} />
       <Route path='/login' element={<Login />} />
+      <Route path='/Realtime' element={<Realtime />} />
+
+      
 
         <Route path='/dashboard'
          element={

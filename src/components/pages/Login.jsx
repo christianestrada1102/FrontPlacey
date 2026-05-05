@@ -29,7 +29,7 @@ export default function Login() {
             const data = await loginRequest(email, password)
             localStorage.setItem("token", data.token)
             localStorage.setItem("user", JSON.stringify(data.user))
-            navigate("/dashboard")
+            navigate("/Home")
         } else {
 
             await registerRequest(nombre,email,password)
