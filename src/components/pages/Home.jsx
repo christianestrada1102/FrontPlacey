@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const categorias = ["Todo","Museos","Cafes","Arte urbano","Selfies"]
@@ -11,6 +11,23 @@ export default function Home() {
     const navigate = useNavigate()
     const [cat_activa, setCatActiva] = useState("Todo")
     const [vistaActiva, setVistaActiva] = useState('Inicio')
+    const [placeys, setPlaceys] = useState([])
+
+    useEffect(() => {
+        const fetchPlaceys = async () => {
+            try {
+                const res = await fetch('http://localhost:3014/placeys')
+                const data = await res.json()
+                setPlaceys(data)
+            } catch (error) {
+                console.error("Error cargando las placeys", error)
+            }
+        }
+
+        fetchPlaceys()
+
+    }, [])
+    
 
     
     return (
@@ -92,36 +109,12 @@ export default function Home() {
             </div>
 
             <div className="px-6 pb-12 columns-2 md_columns-3 lg:columns-4 gap-3">
-                <img className='w-full rounded-lg mb-3 object-cover' src="/arche.jpg" alt="" />
-                <img className='w-full rounded-lg mb-3 object-cover' src="/go.png" alt="" />
-                <img className='w-full rounded-lg mb-3 object-cover' src="/hw.jpg" alt="" />
-                <img className='w-full rounded-lg mb-3 object-cover' src="/innato.png" alt="" />
-                <img className='w-full rounded-lg mb-3 object-cover' src="/museose.jpg" alt="" />
-                <img className='w-full rounded-lg mb-3 object-cover' src="/arche.jpg" alt="" />
-                <img className='w-full rounded-lg mb-3 object-cover' src="/go.png" alt="" />
-                <img className='w-full rounded-lg mb-3 object-cover' src="/hw.jpg" alt="" />
-                <img className='w-full rounded-lg mb-3 object-cover' src="/innato.png" alt="" />
-                <img className='w-full rounded-lg mb-3 object-cover' src="/museose.jpg" alt="" />
-                <img className='w-full rounded-lg mb-3 object-cover' src="/arche.jpg" alt="" />
-                <img className='w-full rounded-lg mb-3 object-cover' src="/go.png" alt="" />
-                <img className='w-full rounded-lg mb-3 object-cover' src="/hw.jpg" alt="" />
-                <img className='w-full rounded-lg mb-3 object-cover' src="/innato.png" alt="" />
-                <img className='w-full rounded-lg mb-3 object-cover' src="/museose.jpg" alt="" />
-                <img className='w-full rounded-lg mb-3 object-cover' src="/arche.jpg" alt="" />
-                <img className='w-full rounded-lg mb-3 object-cover' src="/go.png" alt="" />
-                <img className='w-full rounded-lg mb-3 object-cover' src="/hw.jpg" alt="" />
-                <img className='w-full rounded-lg mb-3 object-cover' src="/innato.png" alt="" />
-                <img className='w-full rounded-lg mb-3 object-cover' src="/museose.jpg" alt="" />
-                <img className='w-full rounded-lg mb-3 object-cover' src="/arche.jpg" alt="" />
-                <img className='w-full rounded-lg mb-3 object-cover' src="/go.png" alt="" />
-                <img className='w-full rounded-lg mb-3 object-cover' src="/hw.jpg" alt="" />
-                <img className='w-full rounded-lg mb-3 object-cover' src="/innato.png" alt="" />
-                <img className='w-full rounded-lg mb-3 object-cover' src="/museose.jpg" alt="" />
-                <img className='w-full rounded-lg mb-3 object-cover' src="/arche.jpg" alt="" />
-                <img className='w-full rounded-lg mb-3 object-cover' src="/go.png" alt="" />
-                <img className='w-full rounded-lg mb-3 object-cover' src="/hw.jpg" alt="" />
-                <img className='w-full rounded-lg mb-3 object-cover' src="/innato.png" alt="" />
-                <img className='w-full rounded-lg mb-3 object-cover' src="/museose.jpg" alt="" />
+             {placeys.map(placey => (
+                <img key={placey.id_placey}
+                className='rounded-xl mb-3 w-full object-cover cursor-pointer hover:opacity-90 transition-all'
+                src={placey.url_img}
+                alt={placey.nombre_place} />
+             ))}
 
 
             </div>
