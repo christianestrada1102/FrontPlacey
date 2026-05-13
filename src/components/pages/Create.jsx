@@ -1,16 +1,49 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { GoogleMap,useJsApiLoader,StandaloneSearchBox } from '@react-google-maps/api'
+import { useRef } from "react"
+
+
 
 export default function Create() {
-    
+
+    const {isLoaded} = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+    libraries: ["places"]
+})
+
+console.log(isLoaded)
+
+const handleOnPlacesChanged = () => {
+    const places = inputref.current.getPlaces()
+
+    if (places && places.length > 0) {
+        const place = places[0]
+        const direccionCom = place.formatted_address
+
+        setForm((prev) => ({
+            ...prev,
+            direccion: direccionCom
+        }))
+
+        console.log(place)
+    }
+
+}
+
+
+    const inputref = useRef(null)
     const navigate = useNavigate()
     const [preview, setPreview] = useState(null)
     const [form,setForm] = useState({
+
         nombre: "",
         descripcion: "",
         direccion: "",
         id_cat: "",
         foto: null
+
     })
 
     const handleChange = (e) => {
@@ -97,8 +130,14 @@ export default function Create() {
                 <textarea name="descripcion" placeholder="¿Que es lo que hace especial este lugar?"
                 value={form.descripcion} onChange={handleChange} rows={3}
                 className="w-full px-4 py-3 rounded-xl bg-white/10 text-[#DFD0B8] placeholder-gray-500
-                 outline-none border border-gray-700 focus:border-[#C1440E] resize-none">
+                outline-none border border-gray-700 focus:border-[#C1440E] resize-none">
                 </textarea>
+                
+                {isLoaded && (
+                    <StandaloneSearchBox
+                    onLoad={(ref) => (inputref.current = ref)}
+                    onPlacesChanged={handleOnPlacesChanged}
+                >
 
                 <input type="text"
                 name="direccion"
@@ -106,23 +145,26 @@ export default function Create() {
                 value={form.direccion}
                 onChange={handleChange}
                 className="w-full px-4 py-3 rounded-xl bg-white/10 text-[#DFD0B8]
-                 placeholder-gray-500 outline-none border border-gray-700 focus:border-[#C1440E]" />
+                placeholder-gray-500 outline-none border border-gray-700 focus:border-[#C1440E]"
+                />
+                </StandaloneSearchBox>
+                )}
 
-                 <select name="id_cat" 
-                 value={form.id_cat}
-                 onChange={handleChange}
-                 className="w-full px-4 py-3 rounded-xl bg-[#0a1524] text-[#DFD0B8] outline-none border border-gray-700 focus:border-[#C1440E] ">
+                <select name="id_cat" 
+                value={form.id_cat}
+                onChange={handleChange}
+                className="w-full px-4 py-3 rounded-xl bg-[#0a1524] text-[#DFD0B8] outline-none border border-gray-700 focus:border-[#C1440E] ">
                     <option value="">Selecciona categoria</option>
                     <option value="1">Cafe</option>
                     <option value="2">Mural</option>
                     <option value="3">Arte urbano</option>
                     <option value="4">Selfie</option>
                     <option value="5">Restaurante</option>
-                 </select>
+                </select>
 
-                 <button type="submit" className="w-full py-3 rounded-xl bg-[#C1440E] text-white font-medium hover:bg-[#a33a0c] transition-all ">
+                <button type="submit" className="w-full py-3 rounded-xl bg-[#C1440E] text-white font-medium hover:bg-[#a33a0c] transition-all ">
                     Pulicar place
-                 </button>
+                </button>
 
             </form>
         </div>

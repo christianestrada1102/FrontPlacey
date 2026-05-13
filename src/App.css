@@ -1,0 +1,31 @@
+/* .pac-container {
+  background-color: #0f172a;
+  border: 1px solid #C1440E;
+  border-radius: 12px;
+  margin-top: 6px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  overflow: hidden;
+  font-family: inherit;
+}
+
+.pac-item {
+  padding: 12px;
+  font-size: 14px;
+  color: #DFD0B8;
+  background-color: #0f172a;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  cursor: pointer;
+}
+
+.pac-item:hover {
+  background-color: rgba(193, 68, 14, 0.15);
+}
+
+.pac-item-query {
+  color: white;
+  font-weight: 600;
+}
+
+.pac-icon {
+  filter: invert(1);
+} */
